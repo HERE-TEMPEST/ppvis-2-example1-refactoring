@@ -11,11 +11,18 @@ class Model:
     self.switch = not self.switch
     return 'X' if not self.switch else 'O'
 
-  def get_subvector(self, vector, item):
-    return [vector[x] for x in item]
-
   def win(self, vector):
     for item in self.coordinate:
       if self.get_subvector(vector, item).count('X') == 3 or self.get_subvector(vector, item).count('O') == 3:
         return item
     return (-1, -1, -1)
+
+
+  def get_subvector(self, vector, item):
+      return [vector[x] for x in item]
+
+  def get_win_color(self):
+    return [0, 1, 0, 1]
+
+  def get_main_color(self):
+    return [0, 0, 0, 1]
