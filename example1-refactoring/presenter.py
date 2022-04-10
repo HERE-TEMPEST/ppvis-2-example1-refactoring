@@ -7,23 +7,16 @@ class Presenter:
     self.viewer = viewer
 
   def tic_tac_toe(self, arg):
-    arg.disabled = True
-    arg.text = self.service.text()
+    self.service.tic_tac_toe(arg)
     self.checkWin()
         
 
   def checkWin(self):
-    vector = list(map(lambda item: item.text, self.viewer.buttons))
-    win = self.service.win(vector)
-    if win != (-1, -1, -1):
-      color = self.service.get_win_color()
-      for i in win:
-          self.viewer.buttons[i].color = color
-      for button in self.viewer.buttons:
-          button.disabled = True
-
+    vector = self.service.extract_vector_of_text(self.viewer.buttons)
+    item = self.service.checkWin(vector)
+    if item != (-1, -1, -1):
+      self.service.finish_the_game(item, self.viewer.buttons)
+      self.service.disable_buttons(self.viewer.buttons)
+      
   def restart(self, arg):
-      for button in self.viewer.buttons:
-          button.color = self.service.get_main_color()
-          button.text = ""
-          button.disabled = False
+    self.service.reset_game(self.viewer.buttons)
